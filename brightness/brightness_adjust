@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+value=$1
+
+target_brightness_percent=0
+
+if [[ $value =~ [+-].* ]]; then
+	current_brightness_percent=$(echo "$(xbacklight -get) / 1" | bc)
+	if [ "$current_brightness_percent" -eq 1 ]; then
+		current_brightness_percent=0
+	fi
+	target_brightness_percent=$(($current_brightness_percent + $value))
+else
+	target_brightness_percent=$value
+fi
+
+if [ "$target_brightness_percent" -gt 100 ]; then
+	target_brightness_percent=100
+elif [ "$target_brightness_percent" -lt 1 ]; then
+	target_brightness_percent=1
+fi
+
+xbacklight -set $target_brightness_percent -time 50

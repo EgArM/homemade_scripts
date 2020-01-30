@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+time=0
+current_brightness_percent=$(echo "$(xbacklight -get) / 1" | bc)
+if [ "$current_brightness_percent" -eq 0 ]; then
+	target_brightness_percent=100
+	time=1000
+else
+	target_brightness_percent=0
+fi
+xbacklight -set $target_brightness_percent -time $time
