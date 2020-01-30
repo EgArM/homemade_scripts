@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-current_state=$(rfkill | awk '/tpacpi_bluetooth_sw/ {print $4}')
-
-if [ "$current_state" == "blocked" ]; then
-	rfkill unblock bluetooth
-else
-	rfkill block bluetooth
-fi
